@@ -7,6 +7,7 @@
   571  git pull
   576  git commit -m 'alejandro2'
   577  git push
-
+git check­out -- octoc­at.txt means checkout last version of octocat file
+testblah`:wq
 
 */
