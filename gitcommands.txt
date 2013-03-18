@@ -9,7 +9,12 @@
   577  git push
 git check­out -- octoc­at.txt means checkout last version of octocat file
 testblah`:wq
+//FOR PHLYN:
 
+528  git add .
+529  git commit -m 'deleted yolo comment'
+git pull
+530  git push
 
 
 
