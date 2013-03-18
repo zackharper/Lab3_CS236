@@ -9,10 +9,11 @@
 #include "Database.h"
 
 Database::Database(DataLog * data){
-    SchemeList * list = data->getSchemeList();
-    for (int i = 0; i < list->getSchemes().size(); i++){
-        relations.push_back(new Relation(list->getSchemes()[i]);
+    SchemeList * scheme_list = data->getSchemeList();
+    for (int i = 0; i < scheme_list->getSchemes().size(); i++){
+        relations.push_back(new Relation(scheme_list->getSchemes()[i]);
     }
+    
 }
 
 Database::~Database(){

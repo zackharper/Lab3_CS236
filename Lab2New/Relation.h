@@ -9,9 +9,9 @@
 
 class Relation {
 public:
-    Relation(DataLog*);
+    Relation(Scheme*);
     ~Relation();
-    void Parse(DataLog*);
+    void Parse(Scheme*);
 
 private:
 
