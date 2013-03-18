@@ -1,0 +1,60 @@
+:-.,   
+
+:-
+,
+.
+:-
+*?()*++
+'THIS IS A STRING!'
+''
+'that was an empty string. this is not.'
+'incomplete string'
+'this isn''t two strings'
+'
+MULTI
+lined
+Strin%^$gz
+||||||||
+'
+
+Schemes Queries Facts Rules
+Schemes,
+Id%
+Idddddddd%^&*()
+1Facts1
+SCHEMES
+
+chemes Queries Facts Rules
+Schemes,
+Id%
+Idddddddd%^&*()
+1Facts1
+SCHEMES
+
+twoafterSCHEMES
+#comment here what up
+aSchemes1
+1Schemes1
+1Facts1
+
+
+#Comment on one line
+idonlineaftercomment1
+
+
+
+#starthello12.txt
+
+#| block cmt |#'a string'
+'another string' anid123
+#|
+multi
+lined 1234 'hello' block
+comment
+|# 'string'
+#singlinecomment
+#|comment >=
+wow|#
+# #| undefined comment should be  here?
+
+'non terminating string

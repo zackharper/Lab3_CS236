@@ -1,0 +1,99 @@
+Schemes:
+        #identifier(hello1,YOLO2,x3hello,)
+        #       id(hello,123yodel)
+        thisIsAStartScheme(peach1,plum2,pear3)
+        AnOthERSCHEME(we,speak,in,the,store,iamasensitive,bore)
+
+
+
+#comment
+        startschemes(i
+, #|commmmm
+
+
+
+
+mmmm
+
+
+
+ent |#hello1,yodel2,jesse1,lacey12345)
+#comment
+
+la(dee, dah, thing)
+Facts
+
+#comment
+:
+#|
+
+COMMENT
+
+
+|#
+hello
+#comment
+(
+#comment
+'l33t',
+#comment
+'string2',
+#yipyip
+'ruff'
+#comment
+)
+.
+
+
+#comment
+
+#comment
+
+
+smelly('somuchtime','isn''t','good').
+
+#;kjsadf!#!@#$@#%#$%QW FLjasf a
+
+
+
+
+deja
+
+(
+'entendu'#comment
+#|helloooo
+
+|#,'daisy','degausser').
+
+Rules:
+	HasSameAddress(X,Y) :- snap(A,X,B,C),snap(D,Y,B,E).
+	Test(X) :- testing('one', two, (R*(a+a)), 'test',e).
+
+#comment
+        One(two) :- word((w+w),q).
+        One(two) :- word(a, (w+w),q).
+        One(two) :- word(zed, (w+w)).
+        One(two) :- HasSameAddress('Snoopy',Who, (d+w), e, 'ere', e),word((w+w), a),werd2((a*a),yolo,'string'),werd3('string'),werd4((x+y),sinx).
+
+Queries:
+	#comment
+	
+	query(#comment
+	normal,'string'
+	#comment
+	,
+	#|
+	comment
+	|#
+	(a+b))?
+	query2((a+b),'yolo',id12,'string','string2','string3')?
+	query3((a*b),(c*d))?
+	query4(a,b,c,d)?
+	#fails  query5(a*b,(c+d))?
+	query6((a*(b+c)),hello)?
+	query6((a*(b+c)))?
+	query7((a*(b+c)), (alex+chelsea))?
+	query8((a*(b+(me*(anoter+(anottter*expressao))))),(alex+chelsea))?
+	query9((a*(b+(me*(hello+(hello2+hello1))))),(alex+chelsea))?
+	query10((a*(b+(me*(hello+(hello2+hello1))))),(a*(b+(me*(hello+(hello2+(a*(b+(me*(hello+(hello2+(a*(b+(me*(hello+(hello2+hello1))))))))))))))),(alex+chelsea))?
+
