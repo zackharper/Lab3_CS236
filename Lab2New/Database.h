@@ -20,6 +20,6 @@ public:
     ~Database();
 private:
     vector<Relation*> relations;
-//YOLO    
+    
 };
 #endif /* defined(__Lab2New__Database__) */
