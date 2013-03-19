@@ -16,7 +16,7 @@ using namespace std;
 
 class Tuple {
 public:
-    Tuple(Facts*);
+    Tuple(Facts*);//blah
 };
 
 #endif /* defined(__Lab2New__Tuple__) */
