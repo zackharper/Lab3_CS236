@@ -11,6 +11,11 @@ class Relation {
 public:
     Relation(Scheme*);
     ~Relation();
+    void addTuple(Facts*);
+    string toString();
+    
+    Token * getName();
+    Schema * getColumns();
 private:
 	Token * name;
     Schema * columns;

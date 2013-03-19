@@ -18,8 +18,10 @@ public:
     Schema(vector<Token*>);
     ~Schema();
 
-    vector<Token*> getHeadings();
+    string toString();
+    Token * getHeading(int);
 private:
     vector<Token*> headings;
 };
+
 #endif /* defined(__Lab2New__Schema__) */
