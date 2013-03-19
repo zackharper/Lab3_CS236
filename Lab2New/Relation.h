@@ -12,6 +12,7 @@ public:
     Relation(Scheme*);
     ~Relation();
     void addTuple(Facts*);
+    string toString();
     
     Token * getName();
     Schema * getColumns();

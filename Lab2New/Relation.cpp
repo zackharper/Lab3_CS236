@@ -24,6 +24,9 @@ void Relation::addTuple(Facts * new_tuple){
     rows.push_back(tuple);
 }
 
+string Relation::toString(){
+    
+}
 
 Token * Relation::getName(){
     return name;

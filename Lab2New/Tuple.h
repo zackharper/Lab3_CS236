@@ -18,6 +18,8 @@ class Tuple {
 public:
     Tuple(Facts*);
     ~Tuple();
+    
+    Token * getToken(int);
 private:
     vector<Token*> tokens;
 };

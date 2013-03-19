@@ -9,9 +9,20 @@
 #include "Tuple.h"
 
 Tuple::Tuple(Facts* fact){
-    vector<Token*> fact_tokens = fact->getTokens();
+    //vector<Token*> fact_tokens; = fact->getTokens();
+    for (int i = 1; i < fact->getTokens().size(); i++)//start at index one to skip the title of the fact, associated with the relation
+        tokens.push_back(fact->getTokens()[i]);    
 }
 
 Tuple::~Tuple(){
-    
+    Token * temp = NULL;
+    for (int i = tokens.size() - 1; i >= 0; i--){
+        temp = tokens[i];
+        tokens.pop_back();
+        delete temp;
+    }
+}
+
+Token * Tuple::getToken(int index){
+    return tokens[index];
 }

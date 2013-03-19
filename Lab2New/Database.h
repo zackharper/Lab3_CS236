@@ -19,6 +19,8 @@ public:
     Database(DataLog*);
     ~Database();
     void MakeTuples(FactList*);
+    
+    string toString();
 private:
     vector<Relation*> relations;
     
