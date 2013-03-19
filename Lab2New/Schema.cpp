@@ -28,6 +28,7 @@ string Schema::toString(){
         if (i != headings.size() - 1)
             str += ",";
     }
+    str += ")";
     return str;
 }
 
