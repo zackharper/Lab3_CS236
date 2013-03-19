@@ -19,3 +19,7 @@ Database::~Database(){
     for (int i = 0; i < relations.size(); i++)
         delete relations[i];
 }
+
+void Database::MakeTuples(FactList * fact_list){
+    for (int i = 0; i < fact_list->size(); i++)
+}
