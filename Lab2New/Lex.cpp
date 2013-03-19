@@ -323,6 +323,7 @@ void Lex::storeToken(Token* token) {
 int main(int argc, char* argv[]) {
     Lex lex(argv[1]);
     DataLog parser = DataLog(&lex);
+    cout << "i'm here";
     Database DB = Database(&parser);
     if (lex.failure != NULL)
         //cout << parser.toString(&lex);
