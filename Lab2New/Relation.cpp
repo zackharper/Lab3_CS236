@@ -1,4 +1,4 @@
-nclude "Relation.h"
+#include "Relation.h"
 
 Relation::Relation(Scheme * data){
     vector<Token*> header_tokens(data->getTokens().begin(),data->getTokens().end()); //= data->getTokens();//wait...do i need to copy each token? or is this done automatically?

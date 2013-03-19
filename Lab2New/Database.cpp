@@ -10,8 +10,10 @@
 
 Database::Database(DataLog * data){
     SchemeList * scheme_list = data->getSchemeList();
-    for (int i = 0; i < scheme_list->getSchemes().size(); i++)
-        relations.push_back(new Relation( (scheme_list->getSchemes()) [i]));
+    for (int i = 0; i < scheme_list->size(); i++){
+        relations.push_back(new Relation( scheme_list->getSchemes() [i]));
+        cout << "i value is: " << i << endl;
+    }
     MakeTuples(data->getFactList());
 }
 
