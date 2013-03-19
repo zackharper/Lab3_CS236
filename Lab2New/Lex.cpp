@@ -4,6 +4,7 @@
 #include "TokenType.h"
 #include "Utils.h"
 #include "DataLog.h"
+#include "Database.h"
 #include <iostream>
 #include <ctype.h>
 
@@ -322,9 +323,13 @@ void Lex::storeToken(Token* token) {
 int main(int argc, char* argv[]) {
     Lex lex(argv[1]);
     DataLog parser = DataLog(&lex);
-    if (lex.failure == NULL)
-        cout << parser.toString(&lex);
-    else
+    Database DB = Database(&parser);
+    if (lex.failure != NULL)
+        //cout << parser.toString(&lex);
+    //else
         cout << "Failure!\n  " << lex.failure->toString();
+    else{
+        cout << DB.toString();
+    }
     return 0;
 }
