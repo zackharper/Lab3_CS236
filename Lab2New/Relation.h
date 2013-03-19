@@ -12,7 +12,6 @@ public:
     Relation(Scheme*);
     ~Relation();
     void Parse(Scheme*);
-
 private:
 	Token * name;
     Schema * columns;
