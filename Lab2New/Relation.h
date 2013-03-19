@@ -16,6 +16,8 @@ public:
     
     Token * getName();
     Schema * getColumns();
+    vector<Tuple*> getRows();
+    void printVect(vector<Token*> vect);
 private:
 	Token * name;
     Schema * columns;

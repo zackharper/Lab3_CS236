@@ -9,8 +9,8 @@
 #include "Schema.h"
 
 Schema::Schema(vector<Token*> columns){
-    int i = 1;//skip the id at index 0 because it is the title of the relation
-    while (i < columns.size()){
+    //skip the id at index 0 because it is the title of the relation
+    for (int i = 1; i < columns.size(); i++){
     	if (columns[i]->getTokenType() == ID)
     		headings.push_back(columns[i]);
     }
@@ -32,6 +32,6 @@ string Schema::toString(){
     return str;
 }
 
-Token * Schema::getHeading(int index){
-	return headings[index];
+vector<Token*> Schema::getHeadings(){
+	return headings;
 }

@@ -12,9 +12,8 @@ Tuple::Tuple(Facts* fact){
     //vector<Token*> fact_tokens;
     for (int i = 1; i < fact->getTokens().size(); i++){//start at index one to skip the title of the fact, associated with the relation
         Token * temp = fact->getTokens()[i];
-        if (temp->getTokenType() == ID)
+        if (temp->getTokenType() == ID || temp->getTokenType() == STRING)
             tokens.push_back(temp);
-        //by pushing back only the ID tokens, the index values will correspond to the indices of the schema.
     }
 }
 
@@ -27,6 +26,6 @@ Tuple::~Tuple(){
     }
 }
 
-Token * Tuple::getToken(int index){
-    return tokens[index];
+vector<Token*> Tuple::getTokens(){
+    return tokens;
 }

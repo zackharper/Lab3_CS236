@@ -19,7 +19,7 @@ public:
     Tuple(Facts*);
     ~Tuple();
     
-    Token * getToken(int);
+    vector<Token*> getTokens();
 private:
     vector<Token*> tokens;
 };
