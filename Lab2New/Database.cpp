@@ -20,8 +20,13 @@ Database::Database(DataLog * data){
 }
 
 Database::~Database(){
-    for (int i = 0; i < relations.size(); i++)
-        delete relations[i];
+    Relation * temp = NULL;
+    for (int i = relations.size() - 1; i >= 0; i--){
+        temp = relations[i];
+        relations.pop_back();
+        delete temp;
+        temp = NULL;
+    }
 }
 
 void Database::MakeTuples(FactList * fact_list){
@@ -46,14 +51,14 @@ void Database::MakeTuples(FactList * fact_list){
             }
         }
     }
-    for (int i = 0; i < relations.size(); i++){
+    /*for (int i = 0; i < relations.size(); i++){
         cout << "relation is: " << relations[i]->getName()->getTokensValue() << endl;
         for (int q = 0; q < relations[i]->getRows().size(); q++){
             for (int w = 0; w < relations[i]->getRows()[q]->getTokens().size(); w++)
                 cout << relations[i]->getRows()[q]->getTokens()[w]->getTokensValue() + ", ";
             cout << endl;
         }
-    }
+    }*/
 
     /*for (int i = 0; i < relations.size(); i++){
         cout << relations[i]->getName()->getTokensValue() << " row size: " << relations[i]->getRows().size() << endl;

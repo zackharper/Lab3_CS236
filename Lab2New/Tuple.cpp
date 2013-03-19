@@ -23,6 +23,7 @@ Tuple::~Tuple(){
         temp = tokens[i];
         tokens.pop_back();
         delete temp;
+        temp = NULL;
     }
 }
 

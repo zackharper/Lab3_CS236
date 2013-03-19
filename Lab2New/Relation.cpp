@@ -20,8 +20,13 @@ Relation::Relation(Scheme * data){
 Relation::~Relation(){
     delete name;
     delete columns;
-    for (int i = 0; i < rows.size(); i++)
-        delete rows[i];
+    Tuple * temp = NULL;
+    for (int i = rows.size() - 1; i >= 0; i--){
+        temp = rows[i];
+        rows.pop_back();
+        delete temp;
+        temp = NULL;
+    }
 }
 
 void Relation::addTuple(Facts * new_tuple){

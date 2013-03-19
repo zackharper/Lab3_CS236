@@ -17,8 +17,13 @@ Schema::Schema(vector<Token*> columns){
 }
 
 Schema::~Schema(){
-    for (int i = 0; i < headings.size(); i++)
-    	delete headings[i];
+    Token * temp = NULL;
+    for (int i = headings.size() - 1; i >= 0; i--){
+        temp = headings[i];
+        headings.pop_back();
+        delete temp;
+        temp = NULL;
+    }
 }
 
 string Schema::toString(){
