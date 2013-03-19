@@ -321,6 +321,7 @@ void Lex::storeToken(Token* token) {
 }
 //THIS PART IS JUST SLIGHTLY DIFFERENT SO I CAN INITIALIZE THE PARSER
 int main(int argc, char* argv[]) {
+    cout << "k im' just at the beginnig";
     Lex lex(argv[1]);
     cout << "wow i'm here";
     DataLog parser = DataLog(&lex);
