@@ -321,18 +321,24 @@ void Lex::storeToken(Token* token) {
 }
 //THIS PART IS JUST SLIGHTLY DIFFERENT SO I CAN INITIALIZE THE PARSER
 int main(int argc, char* argv[]) {
-    cout << "k im' just at the beginnig";
+    cout << "Before Lex" << endl;
     Lex lex(argv[1]);
-    cout << "wow i'm here";
+    cout << "After lex" << endl;
     DataLog parser = DataLog(&lex);
-    cout << "i'm here";
+	cout <<"START UNNECESSARY PARSER.TOSTRING():\n" << parser.toString(&lex) << "\nEND UNNEC PARSER.TOSTRING()" << endl;
     Database DB = Database(&parser);
-    if (lex.failure != NULL)
+  cout << "\n After DB" << endl;
+
+/*  if (lex.failure != NULL)
         //cout << parser.toString(&lex);
     //else
         cout << "Failure!\n  " << lex.failure->toString();
     else{
         cout << DB.toString();
     }
+*/
     return 0;
+
+
 }
+
