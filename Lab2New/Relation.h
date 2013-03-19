@@ -22,6 +22,7 @@ private:
 	Token * name;
     Schema * columns;
     vector<Tuple*> rows;
+    
 };
 
 #endif /* defined(__Lab2New__Relation__) */

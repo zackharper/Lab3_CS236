@@ -18,7 +18,7 @@ Relation::Relation(Scheme * data){
 }
 
 Relation::~Relation(){
-    delete name;
+    /*delete name;
     delete columns;
     Tuple * temp = NULL;
     for (int i = rows.size() - 1; i >= 0; i--){
@@ -26,7 +26,7 @@ Relation::~Relation(){
         rows.pop_back();
         delete temp;
         temp = NULL;
-    }
+    }*/
 }
 
 void Relation::addTuple(Facts * new_tuple){
