@@ -17,6 +17,9 @@ using namespace std;
 class Tuple {
 public:
     Tuple(Facts*);
+    ~Tuple();
+private:
+    vector<Token*> tokens;
 };
 
 #endif /* defined(__Lab2New__Tuple__) */

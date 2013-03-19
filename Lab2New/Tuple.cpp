@@ -7,3 +7,11 @@
 //
 
 #include "Tuple.h"
+
+Tuple::Tuple(Facts* fact){
+    vector<Token*> fact_tokens = fact->getTokens();
+}
+
+Tuple::~Tuple(){
+    
+}
