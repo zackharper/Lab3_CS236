@@ -10,12 +10,12 @@
 
 Database::Database(DataLog * data){
     SchemeList * scheme_list = data->getSchemeList();
-    for (int i = 0; i < scheme_list->getSchemes().size(); i++){
-        relations.push_back(new Relation(scheme_list->getSchemes()[i]);
-    }
-    
+    for (int i = 0; i < scheme_list->getSchemes().size(); i++)
+        relations.push_back(new Relation(scheme_list->getSchemes()[i]));
+    MakeTuples(data->getFactList());
 }
 
 Database::~Database(){
-    
+    for (int i = 0; i < relations.size(); i++)
+        delete relations[i];
 }

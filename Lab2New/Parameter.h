@@ -13,7 +13,6 @@
 #include "Lex.h"
 
 class Parameter {
-    //thing
 public:
     Parameter(Lex*);
     ~Parameter();

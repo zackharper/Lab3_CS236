@@ -18,6 +18,7 @@ class Database {
 public:
     Database(DataLog*);
     ~Database();
+    void MakeTuples(FactList*);
 private:
     vector<Relation*> relations;
     
