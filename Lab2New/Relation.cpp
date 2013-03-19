@@ -25,7 +25,7 @@ void Relation::addTuple(Facts * new_tuple){
 }
 
 string Relation::toString(){
-    
+    string str = name->getTokensValue() + columns->toString();
 }
 
 Token * Relation::getName(){

@@ -43,6 +43,6 @@ void Database::MakeTuples(FactList * fact_list){
 string Database::toString(){
     string str = "Relations:\n\t";
     for (int i = 0; i < relations.size(); i++){
-        //str += relations[i]->toString();
+        str += relations[i]->toString() + "\n\t";
     }
 }

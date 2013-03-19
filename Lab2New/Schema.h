@@ -18,6 +18,7 @@ public:
     Schema(vector<Token*>);
     ~Schema();
 
+    string toString();
     Token * getHeading(int);
 private:
     vector<Token*> headings;

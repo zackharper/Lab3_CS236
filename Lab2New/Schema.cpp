@@ -21,6 +21,16 @@ Schema::~Schema(){
     	delete headings[i];
 }
 
+string Schema::toString(){
+    string str = "(";
+    for (int i = 0; i < headings.size(); i++){
+        str += headings[i]->getTokensValue();
+        if (i != headings.size() - 1)
+            str += ",";
+    }
+    return str;
+}
+
 Token * Schema::getHeading(int index){
 	return headings[index];
 }
