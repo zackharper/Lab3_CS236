@@ -8,10 +8,19 @@
 
 #include "Schema.h"
 
-Schema::Schema(DataLog * data){
-    
+Schema::Schema(vector<Token*> columns){
+    int i = 1;
+    while (i < columns.size()){
+    	if (columns[i]->getTokenType() == ID)
+    		headings.push_back(columns[i]);
+    }
 }
 
 Schema::~Schema(){
-    
+    for (int i = 0; i < headings.size(); i++)
+    	delete headings[i];
+}
+
+vector<Token*> Schema::getHeadings(){
+	return headings;
 }

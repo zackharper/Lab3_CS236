@@ -15,8 +15,10 @@ using namespace std;
 
 class Schema {
 public:
-    Schema(DataLog*);
+    Schema(vector<Token*>);
     ~Schema();
+
+    vector<Token*> getHeadings();
 private:
     vector<Token*> headings;
 };

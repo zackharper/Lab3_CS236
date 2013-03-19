@@ -14,7 +14,7 @@ public:
     void Parse(Scheme*);
 
 private:
-
+	Token * name;
     Schema * columns;
     vector<Tuple*> rows;
 };
