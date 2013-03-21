@@ -79,3 +79,11 @@ string Predicate::toString(){
     }
     return str;
 }
+
+vector<Token*> Predicate::getTokens(){
+    return tokens;
+}
+
+vector<Parameter*> Predicate::getParams(){
+    return params;
+}

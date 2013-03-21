@@ -11,17 +11,23 @@
 
 #include <iostream>
 #include "DataLog.h"
+#include "Tuple.h"
 using namespace std;
 
 class Schema {
 public:
-    Schema(vector<Token*>);
+    Schema(list<Token*>);
     ~Schema();
+    void rename(Token *, int);
+    void project(vector<int>);
 
     string toString();
-    vector<Token*> getHeadings();
+    list<Token*> getHeaders();
 private:
+    void destroy(int);
     vector<Token*> headings;
+    list<Token*> headers;
+    Tuple * heads;
 };
 
 #endif /* defined(__Lab2New__Schema__) */

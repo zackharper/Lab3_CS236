@@ -19,6 +19,7 @@ public:
     Database(DataLog*);
     ~Database();
     void MakeTuples(FactList*);
+    void processQueries(QueryList*);
     
     string toString();
 private:

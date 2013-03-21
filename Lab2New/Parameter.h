@@ -19,6 +19,8 @@ public:
     void Parse(Lex*);
     void Expression(Lex*);
     string toString();
+    
+    vector<Token*> getTokens();
 private:
     vector<Token*> tokens;
 };

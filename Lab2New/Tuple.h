@@ -18,10 +18,12 @@ class Tuple {
 public:
     Tuple(Facts*);
     ~Tuple();
-    
-    vector<Token*> getTokens();
+    bool select(list<Token*>);
+    void printTokenList();
+    list<Token*> getTokens();
 private:
-    vector<Token*> tokens;
+    //vector<Token*> tokens;
+    list<Token*> token_list;
 };
 
 #endif /* defined(__Lab2New__Tuple__) */

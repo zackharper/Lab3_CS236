@@ -10,18 +10,27 @@
 class Relation {
 public:
     Relation(Scheme*);
+    Relation(Relation*, Query*);
     ~Relation();
     void addTuple(Facts*);
     string toString();
+    void select(Relation*);
+    void rename();
+    void project(vector<int>);
     
     Token * getName();
     Schema * getColumns();
-    vector<Tuple*> getRows();
-    void printVect(vector<Token*> vect);
+    list<Tuple*> getRows();
+    void printVect(list<Token*> vect);
 private:
 	Token * name;
     Schema * columns;
-    vector<Tuple*> rows;
+    list<Tuple*> rows;
+    list<Token*> query_params;
+    vector<int> id_vec;
+    vector<int> str_vec;
+    
+    list<Tuple*> rows_list;
     
 };
 

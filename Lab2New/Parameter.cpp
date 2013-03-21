@@ -56,3 +56,7 @@ string Parameter::toString(){
         str += tokens[i]->getTokensValue();
     return str;
 }
+
+vector<Token*> Parameter::getTokens(){
+    return tokens;
+}

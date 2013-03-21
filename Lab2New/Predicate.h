@@ -20,6 +20,9 @@ public:
     void ParameterList(Lex*);
     void ParameterTail(Lex*);
     string toString();
+    
+    vector<Token*> getTokens();
+    vector<Parameter*> getParams();
 private:
     vector<Token*> tokens;//tokens vector will have ID, left paren, commas, and right paren
     vector<Parameter*> params;//will contain the parameter list that will be separated by commas

@@ -17,6 +17,8 @@ Database::Database(DataLog * data){
     //for (int i = 0; i < relations.size(); i++)
         //cout << relations[i]->getName()->getTokensValue() << endl;
     MakeTuples(data->getFactList());
+    processQueries(data->getQueryList());
+    
 }
 
 Database::~Database(){
@@ -45,7 +47,7 @@ void Database::MakeTuples(FactList * fact_list){
             string relation_name = relations[j]->getName()->getTokensValue();
             //cout << "fact name is: " << fact_name << "...relation name is: " << relation_name << endl;
             if (fact_name == relation_name){
-                cout << "current relation is: " << relation_name << endl;
+                //cout << "current relation is: " << relation_name << endl;
                 relations[j]->addTuple(facts[i]);
                 break;
             }
@@ -64,6 +66,19 @@ void Database::MakeTuples(FactList * fact_list){
         cout << relations[i]->getName()->getTokensValue() << " row size: " << relations[i]->getRows().size() << endl;
     }*/
 }
+
+void Database::processQueries(QueryList* query_list){
+    //QueryList * query_list = data->getQueryList();
+    vector<Query*> queries = query_list->getQueries();
+    vector<Relation*> new_relations;
+    for (int i = 0; i < queries.size(); i++){
+        for (int j = 0; j < relations.size(); j++){
+            if (relations[j]->getName()->getTokensValue() == queries[i]->getPred()->getTokens()[0]->getTokensValue())
+                new_relations.push_back(new Relation(relations[j], queries[i]));
+        }
+    }
+}
+
 
 string Database::toString(){
     string str = "Relations:\n\t";

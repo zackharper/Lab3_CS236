@@ -8,6 +8,7 @@
 #include <istream>
 #include <string>
 #include <sstream>
+#include <list>
 
 using namespace std;
 
