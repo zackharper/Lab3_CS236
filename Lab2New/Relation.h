@@ -18,6 +18,7 @@ public:
     string sortTuples();
     void select(Relation*);
     bool duplicates(list<Token*>::iterator, list<Token*>::iterator);
+    void projectDuplicates(list<Token*>::iterator, list<Token*>::iterator, list<Token*>::iterator, Tuple*);
     void rename();
     void project();
     
@@ -38,6 +39,7 @@ private:
     vector<string> duplicate_values;
     void startDuplicateCheck();
     bool already_seen(string);
+    bool hasId();
     //vector<int> str_vec;
     
     
