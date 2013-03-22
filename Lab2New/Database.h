@@ -21,8 +21,9 @@ public:
     void MakeTuples(FactList*);
     void processQueries(QueryList*);
     
-    string toString();
+    string toString(vector<Query*>);
 private:
+    vector<Relation*> new_relations;
     vector<Relation*> relations;
     
 };

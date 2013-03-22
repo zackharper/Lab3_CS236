@@ -25,6 +25,12 @@ Token::Token(const Token& token) {
     value = token.value;
 }
 
+Token::Token(string new_value){
+    tokenType = ID;
+    lineNumber = 0;
+    value = new_value;
+}
+
 Token::~Token(){};
 
 TokenType Token::getTokenType() const {
@@ -54,8 +60,8 @@ string Token::toString() const {
 
 bool Token::operator==(const Token& token) {
     bool result = lineNumber == token.lineNumber &&
-                  value == token.value &&
-                  tokenType == token.tokenType;
+        value == token.value &&
+        tokenType == token.tokenType;
 }
 
 void Token::setTokenType(const TokenType newTokenType) {

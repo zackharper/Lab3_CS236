@@ -18,7 +18,8 @@ Database::Database(DataLog * data){
         //cout << relations[i]->getName()->getTokensValue() << endl;
     MakeTuples(data->getFactList());
     processQueries(data->getQueryList());
-    
+    cout << "\n\nENTERING TO STRING FUNCTION:\n\n";
+    toString(data->getQueryList()->getQueries());
 }
 
 Database::~Database(){
@@ -70,7 +71,7 @@ void Database::MakeTuples(FactList * fact_list){
 void Database::processQueries(QueryList* query_list){
     //QueryList * query_list = data->getQueryList();
     vector<Query*> queries = query_list->getQueries();
-    vector<Relation*> new_relations;
+    //vector<Relation*> new_relations;
     for (int i = 0; i < queries.size(); i++){
         for (int j = 0; j < relations.size(); j++){
             if (relations[j]->getName()->getTokensValue() == queries[i]->getPred()->getTokens()[0]->getTokensValue())
@@ -80,9 +81,10 @@ void Database::processQueries(QueryList* query_list){
 }
 
 
-string Database::toString(){
-    string str = "Relations:\n\t";
-    for (int i = 0; i < relations.size(); i++){
-        str += relations[i]->toString() + "\n\t";
+string Database::toString(vector<Query*> queries){
+    string str;
+    for (int i = 0; i < new_relations.size(); i++){
+        str += queries[i]->toString() + " " + new_relations[i]->toString();
     }
+    return str;
 }

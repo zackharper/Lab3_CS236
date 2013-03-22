@@ -14,23 +14,26 @@ public:
     ~Relation();
     void addTuple(Facts*);
     string toString();
+    string sortTuples();
     void select(Relation*);
     void rename();
-    void project(vector<int>);
+    void project();
     
     Token * getName();
     Schema * getColumns();
-    list<Tuple*> getRows();
+    vector<Tuple*> getRows();
+    list<Tuple*> getRowsList();
     void printVect(list<Token*> vect);
+    list<Tuple*> rows_list;
+    Schema * columns;
+
 private:
 	Token * name;
-    Schema * columns;
-    list<Tuple*> rows;
+    //vector<Tuple*> rows;
     list<Token*> query_params;
     vector<int> id_vec;
     vector<int> str_vec;
     
-    list<Tuple*> rows_list;
     
 };
 

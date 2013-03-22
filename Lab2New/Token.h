@@ -22,6 +22,7 @@ class Token {
          * PostCondition: tokenType = NUL AND tokensValue = "" AND tokensLineNumber = 0
          */
         Token();
+        Token(std::string);
 
         /**
          * Creates a new Token from the newType, newValue and newTokensLineNumber

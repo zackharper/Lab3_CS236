@@ -17,13 +17,19 @@ using namespace std;
 class Tuple {
 public:
     Tuple(Facts*);
+    Tuple(Tuple*);
     ~Tuple();
-    bool select(list<Token*>);
+    bool select(vector<Token*>);
+    bool listSelect(list<Token*>);
+    void project(list<Token*>);
     void printTokenList();
-    list<Token*> getTokens();
+    void destroy();
+    vector<Token*> getTokens();
+    list<Token*> token_list;
+
 private:
     //vector<Token*> tokens;
-    list<Token*> token_list;
+    //vector<Token*> token_vec;
 };
 
 #endif /* defined(__Lab2New__Tuple__) */

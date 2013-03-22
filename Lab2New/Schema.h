@@ -17,17 +17,16 @@ using namespace std;
 class Schema {
 public:
     Schema(list<Token*>);
+    Schema(Schema*);
     ~Schema();
     void rename(Token *, int);
-    void project(vector<int>);
+    void listRename(list<Token*>);
+    void project(list<Token*>);
 
     string toString();
-    list<Token*> getHeaders();
+    list<Token*> headings;
 private:
     void destroy(int);
-    vector<Token*> headings;
-    list<Token*> headers;
-    Tuple * heads;
 };
 
 #endif /* defined(__Lab2New__Schema__) */

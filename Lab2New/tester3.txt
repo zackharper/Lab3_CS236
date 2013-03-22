@@ -25,5 +25,5 @@ Facts:
 Rules:
 Queries:
  
-   snap(A,'Snoopy','12 Apple','555-1234')?
+   snap(A,b,c,'555-1234')?
    csg('CS101','12345','A')?

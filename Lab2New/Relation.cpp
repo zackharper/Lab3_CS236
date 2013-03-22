@@ -13,7 +13,7 @@ Relation::Relation(Scheme * data){
     //printVect(header_tokens);
     //cout << "exited for lop relation" << endl;
     //name = header_tokens[0];//first token will be the id that is the name of the relation. should we check for invalid first tokens? probably not, because it will have been checked for when parsing
-    this->name = data->getTokens()[0];
+    this->name = new Token(data->getTokens()[0]->getTokensValue());
     this->columns = new Schema(header_tokens);
     /*cout << "schema for " << name->getTokensValue() << " is: ";
     for (int i = 0; i < columns->getHeadings().size(); i++)
@@ -22,16 +22,20 @@ Relation::Relation(Scheme * data){
 }
 
 Relation::Relation(Relation * old_relation, Query * q){
-    this->name = old_relation->getName();
-    this->columns = old_relation->getColumns();////////////////WILL THIS PERMANENTLY RENAME THE SCHEMA OF THE ORIGINAL RELATION WHEN RENAMING?
+    this->name = new Token(old_relation->getName()->getTokensValue());
+    
         
     for (int i = 0; i < q->getPred()->getParams().size(); i++){
-        /*if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
+        if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
             id_vec.push_back(i);//by pushing back the index, we can track which indices of the facts and queries must match exactly when SELECTING
         else//the token will be a STRING
-            str_vec.push_back(i);*/
-        this->query_params.push_back(q->getPred()->getParams()[i]->getTokens()[0]);//because there aren't any expressions within these queries, index 0 will only have an ID or a string.
+            str_vec.push_back(i);
+        this->query_params.push_back(q->getPred()->getParams()[i]->getTokens()[0]);//do we need to make NEW tokens for the query parameters?
     }
+    
+    this->columns = new Schema(old_relation->columns);////////////////WILL THIS PERMANENTLY RENAME THE SCHEMA OF THE ORIGINAL RELATION WHEN RENAMING?
+    //cout << "SIZE OF ID VEC IS: " << id_vec.size() << endl;
+    //cout << "SIZE OF STR_VEC IS: " << str_vec.size() << endl;
     /*list<Token*>::iterator it;
     cout << "QUERY PARAMETER LIST: ";
     for (it = query_params.begin(); it != query_params.end(); it++)
@@ -46,9 +50,9 @@ Relation::Relation(Relation * old_relation, Query * q){
      USE ID VECT.
      
      */
-    this->rename();
+    this->columns->listRename(query_params);
     
-    //this->project(str_vec);
+    this->project();
     
     //this->columns->project(str_vec);
     
@@ -64,116 +68,125 @@ Relation::Relation(Relation * old_relation, Query * q){
 }
 
 Relation::~Relation(){
-    
-    /*delete name;
+    delete name;///////////////////////for some reason deleting specifically the name (just the name) causes a segfault
     delete columns;
-    Tuple * temp = NULL;
-    for (int i = rows.size() - 1; i >= 0; i--){
-        temp = rows[i];
-        rows.pop_back();
-        delete temp;
-        temp = NULL;
-    }*/
+    rows_list.erase(rows_list.begin(),rows_list.end());
 }
 
 void Relation::addTuple(Facts * new_tuple){
     //check if tuple exists already????; push back new tuple
-    Tuple * tuple = new Tuple(new_tuple);
+    //Tuple * tuple = new Tuple(new_tuple);
     /*for (int i = 0; i < rows.size(); i++){
         if (
     }
     for (int i = 0; i < tuple->getTokens().size(); i++)
         cout << tuple->getTokens()[i]->getTokensValue() << ",";
     cout << endl;*/
-    rows.push_back(tuple);
-    cout << "ROW BEING PUSHED BACK INTO RELATION " << name->getTokensValue() << ": ";
-    tuple->printTokenList();
+    //rows.push_back(tuple);
+    rows_list.push_back(new Tuple(new_tuple));
+    //cout << "tuple just added: ";
+    //tuple->printTokenList();
+    //cout << endl;
+    //cout << "ROW BEING PUSHED BACK INTO RELATION " << name->getTokensValue() << ": ";
+    //tuple->printTokenList();
 }
 
 string Relation::toString(){
-    string str = name->getTokensValue() + columns->toString();
+    string str;
+    if (rows_list.size() == 0)
+        str = "No\n";
+    else{
+        str = "Yes(";
+        str += rows_list.size() + ")";
+        
+        /*
+        vector<Token*> sorted;
+        for(list<Tuple*>::iterator tuple_it = rows_list.begin(); tuple_it != rows_list.end(); tuple_it++){
+            sorted.push_back(*tuple_it);
+        }
+        for (list<Tuple*>::iterator tuple_it = rows_list.begin(); tuple_it != rows_list.end(); tuple_it++){
+            list<Token*>::iterator schema_it = columns->headings.begin();
+            list<Token*>::iterator token_it = (*tuple_it)->token_list.begin();
+            str += "\n  ";
+            while (schema_it != columns->headings.end() && token_it != (*tuple_it)->token_list.end()){
+                str += (*schema_it)->getTokensValue() + "=" + (*token_it)->getTokensValue();
+            }
+        }*/
+    }
+}
+
+string Relation::sortTuples(){
+    
 }
 
 void Relation::select(Relation * old_relation ){
-    list<Tuple*>::iterator it;
-    //vector<Tuple*> new_tuples;
-    cout << "size of first row: " << old_relation->getRows().size() << endl;
-    for (it = old_relation->getRows().begin(); it != old_relation->getRows().end(); it++){
-        //cout << "current size of row value is: ";
-        //cout << (*it)->getTokens().size() << endl;
-        //for (int i = 0; i < (*it)->getTokens().size(); i++){
-            //cout << (*it)->getTokens()
-        cout << "entered relation loop, old rel size:" << old_relation->getRows().size() << this->getRows().size()<< endl;
+    //where there is a String in query_param that matches the DB, advance.
+    
+    /*for(list<Tuple*>::iterator it = old_relation->getRows().begin(); it != old_relation->getRows().end(); it++){
+        list<Token*> row = (*it)->getTokens();
+        list<Token*>::iterator row_it;
+        for(row_it = row.begin(); row_it != row.end(); row_it++){
         
-        list<Tuple*>::iterator it2, it3;
-        cout << "name of old relation: " << old_relation->getName()->getTokensValue() << endl;
-        it2 = old_relation->getRows().end();
-        it3 = old_relation->getRows().begin();
-        it2--;
-        (*it3)->printTokenList();
-        (*it2)->printTokenList();
-        for(it2 = old_relation->getRows().begin(); it2 != old_relation->getRows().end(); it2++){
-        
-            cout << ";;;;;;;; tuple:" ;
-            (*it2)->printTokenList();
-            cout << endl << endl;
+            cout << "BOOOOOM:::::::::::" << (*row_it)->getTokensValue() << endl;
         }
         
-        //for(it )
-        if ((*it)->select(query_params))
-            rows.push_back(*it);
-        
-        
-        /*for (int j = 0; j < str_vec.size(); j++){
-//K. Try and top this for weirdest line of code ever: ftw. #YOLO
-            if (old_relation->getRows()[i]->getTokens()[this->str_vec[j]]->getTokensValue() != this->query_params[this->str_vec[j]]->getTokensValue())
-                break;
-            if (j == str_vec.size() - 1)//all possible strings will have been tested already.
-                rows.push_back(old_relation->getRows()[i]);
-        }*/
-    }
-    
-    /*
-    cout << "Queries are: ";
-    printVect(query_params);
-    for (int i = 0; i < rows.size(); i++){
-        cout << "\tPRINTING SELECTED LIST: ";
-
-        printVect(rows[i]->getTokens());
     }
      */
-    //return new_tuples;
+    
+    /*///////////////////////OLD STUFF THAT WE SHOULD KEEP
+    for (int i = 0; i < old_relation->getRows().size(); i++){
+        if (old_relation->getRows()[i]->select(query_params))
+            this->rows.push_back(old_relation->getRows()[i]);
+    }*/
+    
+    //cout << "entering the dreaded loop" << endl;
+    //cout << "size of row list is: " << this->rows_list.size() << endl;
+    //cout << "size of old row list is: " << old_relation->rows_list.size() << endl;
+    for(list<Tuple*>::iterator it = old_relation->rows_list.begin(); it != old_relation->rows_list.end(); it++){
+        if ((*it)->listSelect(query_params))
+            this->rows_list.push_back(new Tuple(*it));
+    }
+    /*cout << "NEW ROWS ARE: " << endl;
+    for (list<Tuple*>::iterator it = this->rows_list.begin(); it != this->rows_list.end(); it++){
+        (*it)->printTokenList();
+        cout << endl;
+    }*/
 }
 
 void Relation::rename(){
-    for(int i=0; i < id_vec.size(); i++){
-        //columns->getHeadings()[ id_vec[i] ] = query_params[ id_vec[i]];
+    /*for(int i=0; i < id_vec.size(); i++){
+        //this->columns->getHeaders()[ id_vec[i] ] = query_params[ id_vec[i]];
         
         //columns->rename(query_params[ id_vec[i] ], id_vec[i]);
         
     }
+    cout << "SIZE OF HEADERS ARE: " << columns->getHeaders().size() << endl;
+    for (int i = 0; i < columns->getHeaders().size(); i++){
+        cout << this->columns->getHeaders()[i]->getTokensValue();
+    }
+    cout << endl;*/
+    
 }
-void Relation::project(vector<int> indices){
+
+void Relation::project(){
     /*
     for (int c = 0; c < rows.size(); c++){
         for (int i = 0; i < indices.size(); i++)
             rows[c]->getTokens()[indices[i]]->setTokenType(COLON);//COLON is a dummy token type that tells us where to delete the items
-        for (int i = 0; i < rows[c]->getTokens().size(); i++){
-            if (rows[c]->getTokens()[i]->getTokenType() == COLON){
-                //destroy(i);
-                for(int j = i; j < rows[c]->getTokens().size(); j++){
-                    //if(j != (rows[c]->getTokens().size() - 1))//NEED TO MAKE A FUNCTION IN TUPLE THAT ALLOWS ME TO CHANGE THE TUPLE VALUES
-                        //headings[j] = headings[j+1];
-                }
-                //headings.pop_back(); //deletes last element which should be a :
-                i = 0;//we need to start the loop over because the vector has changed
-            }
-        }
+        
+        rows[c]->destroy();
     }*/
+    columns->project(query_params);
+    for (list<Tuple*>::iterator it = this->rows_list.begin(); it != this->rows_list.end(); it++)
+        (*it)->project(query_params);
 }
 
-list<Tuple*> Relation::getRows(){
+/*vector<Tuple*> Relation::getRows(){
     return rows;
+}*/
+
+list<Tuple*> Relation::getRowsList(){
+    return rows_list;
 }
 
 Token * Relation::getName(){
