@@ -4,10 +4,19 @@ Schemes:
    cdh(C,D,H)
    cr(C,R)
 Facts:
-   snap('12345','C. Brown','12 Apple','555-1234').
-   snap('67890','L. Van Pelt','34 Pear','555-5678').
-   snap('22222','P. Patty','56 Grape','555-9999').
-   snap('33333','Snoopy','12 Apple','555-1234').
+#   snap('12345','C. Brown','12 Apple','555-1234').
+#   snap('67890','L. Van Pelt','34 Pear','555-5678').
+#   snap('22222','Snoopy','56 Grape','555-9999').
+#   snap('33333','Snoopy','33333','555-1234').
+ 
+
+   snap('33333','Snoopy','33333','Snoopy').
+ 
+   snap('33333','Snoopy','power','Snoopy').
+#   snap('33333','Snoopy','12 Apple','555-1234').
+#   snap('33333','Snoopy','33333','555-1234').
+#   snap('33333','Snoopy','12 Apple','555-1234').
+#   snap('33333','Snoopy','12 Apple','555-1234').
    csg('CS101','12345','A').
    csg('CS101','67890','B').
    csg('CS101','33333','A-').
@@ -24,17 +33,17 @@ Facts:
    cr('PH100','Newton Lab').
 Rules:
 Queries:
-   snap(Id,'Snoopy',Adr,Ph)?
+   snap(Id,X,Y,X)?
 
-#   snap('Id','Snoopy','Adr','Ph')?
+  # snap(Id,'Snoopy','Adr','Ph')?
 
-   csg(Course,'33333',Grade)?
-	snap(X, 'Snoopy', Y, Z)?
+ #  csg(Course,'33333',Grade)?
+#	snap(X, 'Snoopy', Y, Z)?
 
-   csg(Course,Id,Grade)?
-   snap('22222',XXX,'56 Grape','555-9999')?
+  # csg(Course,Id,Grade)?
+ #  snap('22222',XXX,'56 Grape','555-9999')?
 
-   snap(IIIIIII,'P. Patty','56 Grape','555-9999')?
+#   snap(IIIIIII,'P. Patty','56 Grape','555-9999')?
 #   csg(Course,'33333',Grade)?
 #   cr('CS101','Auditorium')?
 #   cdh('EE200','F',Hour)?

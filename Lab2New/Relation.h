@@ -40,6 +40,7 @@ private:
     void startDuplicateCheck();
     bool already_seen(string);
     bool hasId();
+    void clearDuplicates();
     //vector<int> str_vec;
     
     
