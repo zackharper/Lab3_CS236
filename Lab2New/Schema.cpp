@@ -116,10 +116,10 @@ void Schema::project(list<Token*> query_params){
         token_it++;
         query_it++;
     }
-    cout << "FINAL PROJECTED SCHEMA IS: ";
+    /*cout << "FINAL PROJECTED SCHEMA IS: ";
     for (list<Token*>::iterator it = headings.begin(); it != headings.end(); it++)
         cout << (*it)->getTokensValue() << " ";
-    cout << endl;
+    cout << endl;*/
 
     //cout << "PROJECTED TOKENS ARE: ";
     //printTokenList();

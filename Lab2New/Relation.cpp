@@ -26,10 +26,10 @@ Relation::Relation(Relation * old_relation, Query * q){
     
         
     for (int i = 0; i < q->getPred()->getParams().size(); i++){
-        if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
+        /*if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
             id_vec.push_back(i);//by pushing back the index, we can track which indices of the facts and queries must match exactly when SELECTING
         else//the token will be a STRING
-            str_vec.push_back(i);
+            str_vec.push_back(i);*/
         this->query_params.push_back(q->getPred()->getParams()[i]->getTokens()[0]);//do we need to make NEW tokens for the query parameters?
     }
     
@@ -92,13 +92,18 @@ void Relation::addTuple(Facts * new_tuple){
 }
 
 string Relation::toString(){
+    //cout << "name of relation is : " << name->getTokensValue() << endl;
     string str;
+    //cout << "size of list is: " << rows_list.size();
     if (rows_list.size() == 0)
         str = "No\n";
     else{
         str = "Yes(";
-        str += rows_list.size() + ")";
-        
+        int Number = rows_list.size();
+        str += static_cast<ostringstream*>( &(ostringstream() << Number) )->str();;
+        str += ")\n";
+        str += sortTuples();
+        //cout << str << endl;
         /*
         vector<Token*> sorted;
         for(list<Tuple*>::iterator tuple_it = rows_list.begin(); tuple_it != rows_list.end(); tuple_it++){
@@ -113,10 +118,33 @@ string Relation::toString(){
             }
         }*/
     }
+    return str;
 }
 
 string Relation::sortTuples(){
-    
+    list<string> strings;
+    for (list<Tuple*>::iterator tuple_it = rows_list.begin(); tuple_it != rows_list.end(); tuple_it++){
+        string str;
+        list<Token*>::iterator schema_it = columns->headings.begin();
+        list<Token*>::iterator token_it = (*tuple_it)->token_list.begin();
+        //str += "\n  ";
+        while (schema_it != columns->headings.end() && token_it != (*tuple_it)->token_list.end()){
+            if (schema_it != columns->headings.begin())
+                str += ", ";
+            str += (*schema_it)->getTokensValue() + "=" + (*token_it)->getTokensValue();
+            schema_it++;
+            token_it++;
+        }
+        //cout << "tuple string: " << str;
+        strings.push_back(str);
+    }
+    strings.sort();
+    string output;
+    for (list<string>::iterator str_it = strings.begin(); str_it != strings.end(); str_it++){
+        if (*str_it != "")
+            output += "  " + *str_it + "\n";
+    }
+    return output;
 }
 
 void Relation::select(Relation * old_relation ){

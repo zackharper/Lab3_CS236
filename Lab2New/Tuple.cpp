@@ -78,10 +78,11 @@ void Tuple::project(list<Token*> query_params){
     list<Token*>::iterator query_it = query_params.begin();
     //cout << "token list beginning value: " << (*token_it)->getTokensValue() << endl;
     //cout << "query list beginning value: " << (*query_it)->getTokensValue() << endl;
-    cout << "before the project loop" << endl;
+    
+    //cout << "before the project loop" << endl;
     while (query_it != query_params.end() && token_it != token_list.end()) {
-        cout << "token list value: " << (*token_it)->getTokensValue() << endl;
-        cout << "query list value: " << (*query_it)->getTokensValue() << endl;
+        //cout << "token list value: " << (*token_it)->getTokensValue() << endl;
+        //cout << "query list value: " << (*query_it)->getTokensValue() << endl;
         
         if ((*query_it)->getTokenType() == STRING)
             token_list.erase(token_it);
@@ -89,9 +90,9 @@ void Tuple::project(list<Token*> query_params){
         token_it++;
         query_it++;
     }
-    cout << "PROJECTED TOKENS ARE: ";
-    printTokenList();
-    cout << endl;
+    //cout << "PROJECTED TOKENS ARE: ";
+    //printTokenList();
+    //cout << endl;
 }
 
 void Tuple::destroy(){

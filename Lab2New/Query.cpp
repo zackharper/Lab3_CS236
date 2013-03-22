@@ -32,7 +32,7 @@ void Query::Parse(Lex * lexer){
 }
 
 string Query::toString(){
-    return "  " + pred->toString() + token->getTokensValue();
+    return pred->toString() + token->getTokensValue();
 }
 
 Predicate * Query::getPred(){

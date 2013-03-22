@@ -84,7 +84,9 @@ void Database::processQueries(QueryList* query_list){
 string Database::toString(vector<Query*> queries){
     string str;
     for (int i = 0; i < new_relations.size(); i++){
-        str += queries[i]->toString() + " " + new_relations[i]->toString();
+        //cout << queries[i]->toString() << endl;
+        cout << queries[i]->toString() + " " + new_relations[i]->toString();
+        //cout << "exiting iteration of loop" << endl;
     }
     return str;
 }

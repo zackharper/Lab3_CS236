@@ -4,6 +4,7 @@
 #define __Lab2New__Relation__
 
 #include <iostream>
+#include <sstream>
 #include "Schema.h"
 #include "Tuple.h"
 
@@ -31,8 +32,8 @@ private:
 	Token * name;
     //vector<Tuple*> rows;
     list<Token*> query_params;
-    vector<int> id_vec;
-    vector<int> str_vec;
+    //vector<int> id_vec;
+    //vector<int> str_vec;
     
     
 };
