@@ -26,10 +26,10 @@ Relation::Relation(Relation * old_relation, Query * q){
     
         
     for (int i = 0; i < q->getPred()->getParams().size(); i++){
-        /*if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
+        if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
             id_vec.push_back(i);//by pushing back the index, we can track which indices of the facts and queries must match exactly when SELECTING
-        else//the token will be a STRING
-            str_vec.push_back(i);*/
+        //else//the token will be a STRING
+            //str_vec.push_back(i);
         this->query_params.push_back(q->getPred()->getParams()[i]->getTokens()[0]);//do we need to make NEW tokens for the query parameters?
     }
     
@@ -51,6 +51,7 @@ Relation::Relation(Relation * old_relation, Query * q){
      
      */
     this->columns->listRename(query_params);
+    this->startDuplicateCheck();
     
     this->project();
     
@@ -98,10 +99,7 @@ string Relation::toString(){
     if (rows_list.size() == 0)
         str = "No\n";
     else{
-        str = "Yes(";
-        int Number = rows_list.size();
-        str += static_cast<ostringstream*>( &(ostringstream() << Number) )->str();;
-        str += ")\n";
+        
         str += sortTuples();
         //cout << str << endl;
         /*
@@ -139,7 +137,12 @@ string Relation::sortTuples(){
         strings.push_back(str);
     }
     strings.sort();
+    strings.unique();
     string output;
+    output = "Yes(";
+    int Number = strings.size();
+    output += static_cast<ostringstream*>( &(ostringstream() << Number) )->str();;
+    output += ")\n";
     for (list<string>::iterator str_it = strings.begin(); str_it != strings.end(); str_it++){
         if (*str_it != "")
             output += "  " + *str_it + "\n";
@@ -179,6 +182,84 @@ void Relation::select(Relation * old_relation ){
         (*it)->printTokenList();
         cout << endl;
     }*/
+}
+
+void Relation::startDuplicateCheck(){
+    for (list<Tuple*>::iterator tuple = rows_list.begin(); tuple != rows_list.end(); tuple++){
+        list<Token*>::iterator tuple_tokens = (*tuple)->token_list.begin();
+        list<Token*>::iterator query = query_params.begin();
+        while ((*query)->getTokenType() != ID){
+            tuple_tokens++;
+            query++;
+        }
+        duplicate_values.push_back((*query)->getTokensValue());
+        /*cout << "CURRENT SCHEMA TO BE CHECKED IS: ";
+        for (list<Token*>::iterator it = columns->headings.begin(); it != columns->headings.end(); it++)
+            cout << (*it)->getTokensValue() + ", ";
+        cout << "\n\t";*/
+        if (!duplicates(query, tuple_tokens))
+            rows_list.erase(tuple);
+    }
+}
+
+bool Relation::duplicates(list<Token*>::iterator query_it, list<Token*>::iterator tuple_it){
+    /*string master_tuple_string = (*tuple_it)->getTokensValue();
+    string master_query_id = (*query_it)->getTokensValue();
+    list<Token*>::iterator it_q = query_it;
+    list<Token*>::iterator it_t = tuple_it;
+    while (it_q != query_params.end()) {
+        if ((*it_q)->getTokenType() == STRING) {
+            it_q++;
+            it_t++;
+        }
+        else if ((*it_q)->getTokensValue() == master_query_id) {
+            if ((*it_t)->getTokensValue() != )
+        }
+    }
+    if (schema_it == columns->headings.end())
+        return;
+    else if ((*schema_it)->getTokensValue() == current){
+        (*schema_it)->setTokenType(COLON);//COLON is the dummy type used to signify that we already saw this token
+        
+    }
+    else if((*schema_it)->getTokenType() == COLON)
+        duplicates(schema_it++, current);*/
+    
+    string query_master = (*query_it)->getTokensValue();
+    string tuple_master = (*tuple_it)->getTokensValue();
+    /*cout << "value in query_it when iterating through: ";
+    for (query_it; query_it != query_params.end(); query_it++)
+        cout << (*query_it)->getTokensValue() << ", ";
+    cout << endl;*/
+    while (query_it != query_params.end()){
+        //cout << "query_it value is currently: " << (*query_it)->getTokensValue() << endl;
+        if ((*query_it)->getTokensValue() == query_master){
+            if ((*tuple_it)->getTokensValue() != tuple_master)
+                return false;
+            else{
+                query_it++;
+                tuple_it++;
+            }
+        }
+        else if ((*query_it)->getTokenType() == STRING || already_seen((*query_it)->getTokensValue())){
+            query_it++;
+            tuple_it++;
+        }
+        else{//a new variable to check for has been found
+            duplicate_values.push_back((*query_it)->getTokensValue());
+            if (!duplicates(query_it, tuple_it))//if the other recursive calls are all true, this current recursion will finish checking this variable of the query
+                return false;
+        }
+    }
+    return true;
+}
+
+bool Relation::already_seen(string check){
+    for (int i = 0; i < duplicate_values.size(); i++){
+        if (duplicate_values[i] == check)
+            return true;
+    }
+    return false;
 }
 
 void Relation::rename(){

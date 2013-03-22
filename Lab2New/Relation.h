@@ -17,6 +17,7 @@ public:
     string toString();
     string sortTuples();
     void select(Relation*);
+    bool duplicates(list<Token*>::iterator, list<Token*>::iterator);
     void rename();
     void project();
     
@@ -32,7 +33,11 @@ private:
 	Token * name;
     //vector<Tuple*> rows;
     list<Token*> query_params;
-    //vector<int> id_vec;
+    vector<int> id_vec;
+    //vector<vector<int>> duplicate_vec;
+    vector<string> duplicate_values;
+    void startDuplicateCheck();
+    bool already_seen(string);
     //vector<int> str_vec;
     
     
