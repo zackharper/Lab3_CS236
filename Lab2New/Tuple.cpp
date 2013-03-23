@@ -86,6 +86,7 @@ void Tuple::project(list<Token*> query_params){
         
         if ((*query_it)->getTokenType() == STRING)
             token_list.erase(token_it);
+        
         //QUERY TOKEN IS ID--don't do anything with the tuple
         token_it++;
         query_it++;

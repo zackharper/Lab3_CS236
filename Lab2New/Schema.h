@@ -22,11 +22,14 @@ public:
     void rename(Token *, int);
     void listRename(list<Token*>);
     void project(list<Token*>);
+    void projectDupes(list<Token*>);
 
     string toString();
     list<Token*> headings;
 private:
     void destroy(int);
+    bool already_seen(string);
+    vector<string> dupes;
 };
 
 #endif /* defined(__Lab2New__Schema__) */

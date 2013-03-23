@@ -1,4 +1,5 @@
 #include "Relation.h"
+#include <assert.h>
 
 Relation::Relation(Scheme * data){
     
@@ -26,14 +27,14 @@ Relation::Relation(Relation * old_relation, Query * q){
     
         
     for (int i = 0; i < q->getPred()->getParams().size(); i++){
-        if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
-            id_vec.push_back(i);//by pushing back the index, we can track which indices of the facts and queries must match exactly when SELECTING
+        //if (q->getPred()->getParams()[i]->getTokens()[0]->getTokenType() == ID)
+           // id_vec.push_back(i);//by pushing back the index, we can track which indices of the facts and queries must match exactly when SELECTING
         //else//the token will be a STRING
             //str_vec.push_back(i);
-        this->query_params.push_back(q->getPred()->getParams()[i]->getTokens()[0]);//do we need to make NEW tokens for the query parameters?
+        this->query_params.push_back(new Token(q->getPred()->getParams()[i]->getTokens()[0]->getTokensValue()));//do we need to make NEW tokens for the query parameters?
     }
     
-    this->columns = new Schema(old_relation->columns);////////////////WILL THIS PERMANENTLY RENAME THE SCHEMA OF THE ORIGINAL RELATION WHEN RENAMING?
+    this->columns = new Schema(old_relation->columns);
     //cout << "SIZE OF ID VEC IS: " << id_vec.size() << endl;
     //cout << "SIZE OF STR_VEC IS: " << str_vec.size() << endl;
     /*list<Token*>::iterator it;
@@ -58,8 +59,7 @@ Relation::Relation(Relation * old_relation, Query * q){
     this->project();
     
     
-    /*if(id_found){
-        
+    if(id_found){
         for (list<Tuple*>::iterator tuple = rows_list.begin(); tuple != rows_list.end(); tuple++){
             clearDuplicates();
             list<Token*>::iterator query_it = query_params.begin();
@@ -70,9 +70,13 @@ Relation::Relation(Relation * old_relation, Query * q){
                 schema_it++;
             }
             duplicate_values.push_back((*query_it)->getTokensValue());
-           
+            
             //cout << "current query pointed to is: " << (*query_it)->getTokensValue() << endl;
             this->projectDuplicates(query_it, token_it, schema_it, (*tuple));
+            cout << "going to start new loop" << endl;
+            query_params.erase(query_params.begin(),query_params.end());
+            for (int i = 0; i < q->getPred()->getParams().size(); i++)
+                this->query_params.push_back(new Token(q->getPred()->getParams()[i]->getTokens()[0]->getTokensValue()));
         }
     }
     
@@ -226,11 +230,11 @@ void Relation::startDuplicateCheck(){
         for (list<Token*>::iterator it = columns->headings.begin(); it != columns->headings.end(); it++)
             cout << (*it)->getTokensValue() + ", ";
         cout << "\n\t";*/
-        cout << "QUERY VAL AND TUPLE VAL" << (*query)->getTokensValue() << "\t tuple:\t"<< (*tuple_tokens)->getTokensValue() << endl;
+        //cout << "QUERY VAL AND TUPLE VAL" << (*query)->getTokensValue() << "\t tuple:\t"<< (*tuple_tokens)->getTokensValue() << endl;
         if (!duplicates(query, tuple_tokens)){
-            cout << "+++++++++++about to delete the tule:" ;
-            (*tuple)->printTokenList();
-            cout << endl;
+            //cout << "+++++++++++about to delete the tule:" ;
+            //(*tuple)->printTokenList();
+            //cout << endl;
             rows_list.erase(tuple);
         }
         clearDuplicates();
@@ -245,23 +249,23 @@ void Relation::clearDuplicates(){
 bool Relation::duplicates(list<Token*>::iterator query_it, list<Token*>::iterator tuple_it){
     string query_master = (*query_it)->getTokensValue();
     string tuple_master = (*tuple_it)->getTokensValue();
-    cout << "query master is: " << query_master << endl << "tuple master is: " << tuple_master << endl;
+    //cout << "query master is: " << query_master << endl << "tuple master is: " << tuple_master << endl;
     /*cout << "value in query_it when iterating through: ";
     for (query_it; query_it != query_params.end(); query_it++)
         cout << (*query_it)->getTokensValue() << ", ";
     cout << endl;*/
     while (query_it != query_params.end()){
-        cout << "+++++++++++++STARTIG WHILE WITH: " << (*query_it)->getTokensValue() << endl;
+        //cout << "+++++++++++++STARTIG WHILE WITH: " << (*query_it)->getTokensValue() << endl;
 
         //cout << "query_it value is currently: " << (*query_it)->getTokensValue() << endl;
         if ((*query_it)->getTokensValue() == query_master){
             if ((*tuple_it)->getTokensValue() != tuple_master){
-                cout << "+++++++++++++++++++++++RETURNING FALSE1" << (*query_it)->getTokensValue() << endl;
+                //cout << "+++++++++++++++++++++++RETURNING FALSE1" << (*query_it)->getTokensValue() << endl;
                 return false;
                 //break;
             }
             else{
-                cout << "compared with itself: " << (*query_it)->getTokensValue() << "\t" << (*tuple_it)->getTokensValue() << endl;
+                //cout << "compared with itself: " << (*query_it)->getTokensValue() << "\t" << (*tuple_it)->getTokensValue() << endl;
                 query_it++;
                 tuple_it++;
             }
@@ -273,14 +277,14 @@ bool Relation::duplicates(list<Token*>::iterator query_it, list<Token*>::iterato
         else{//a new variable to check for has been found
             duplicate_values.push_back((*query_it)->getTokensValue());
             if (!duplicates(query_it, tuple_it)){//if the other recursive calls are all true, this current recursion will finish checking this variable of the query
-                cout << "+++++++++++++++++++++++RETURNING FALSE2" << (*query_it)->getTokensValue() << endl;
+                //cout << "+++++++++++++++++++++++RETURNING FALSE2" << (*query_it)->getTokensValue() << endl;
 
                 return false;
             }// break;
             
         }
     }
-    cout << "+++++++++++++++++++++++RETURNING TRUE" << endl;
+    //cout << "+++++++++++++++++++++++RETURNING TRUE" << endl;
 
     return true;
 }
@@ -319,6 +323,7 @@ void Relation::project(){
     columns->project(query_params);
     for (list<Tuple*>::iterator it = this->rows_list.begin(); it != this->rows_list.end(); it++)
         (*it)->project(query_params);
+    
 }
 
 void Relation::projectDuplicates(list<Token*>::iterator query_it, list<Token*>::iterator tuple_it, list<Token*>::iterator schema_it, Tuple * current_tuple){
@@ -326,46 +331,92 @@ void Relation::projectDuplicates(list<Token*>::iterator query_it, list<Token*>::
     /*cout << "duplicate vector has: ";
     for (int i = 0; i < duplicate_values.size(); i++)
         cout << duplicate_values[i];
-    cout << endl;*/
-    string query_master = (*query_it)->getTokensValue();
-    /*cout << "value in query_it when iterating through: ";
-     for (query_it; query_it != query_params.end(); query_it++)
-     cout << (*query_it)->getTokensValue() << ", ";
-     cout << endl;*/
+    cout << endl;
+    
+    string query_master;
+    cout << "value in query_it when iterating through: ";
+    for (list<Token*>::iterator it = query_it; it != query_params.end(); it++)
+         cout << (*it)->getTokensValue() << ", ";
+    cout << endl;
     //int size = duplicate_values.size();
     //cout << "top of duplicate vector is: " << duplicate_values[size - 1];
     if (query_it != query_params.end()){
+        query_master = (*query_it)->getTokensValue();
         query_it++;
-        schema_it++;
+        //schema_it++;
         tuple_it++;
+    
+        //cout << "query it is currently at: " << (*query_it)->getTokensValue() << endl;
+        //cout << "query master is: " << query_master << endl;
     }
-    //cout << "query it is currently at: " << (*query_it)->getTokensValue() << endl;
-    //cout << "query master is: " << query_master << endl;
+    
+    if (query_it == query_params.end())
+        cout << "REACHED THE END NIGGAS" << endl;
     while (query_it != query_params.end()){
-        //cout << "loop happening" << endl;
-        //cout << "query_it value is currently: " << (*query_it)->getTokensValue() << endl;
+
+        cout << "query master IN THE LOOP is " << query_master << endl;
+        cout << "query_it value IN THE LOOP is currently: " << (*query_it)->getTokensValue() << endl;
+        cout << "tuple_it value IN THE LOOP is currently: " << (*tuple_it)->getTokensValue() << endl << endl;
         if ((*query_it)->getTokensValue() == query_master){
+            cout << "about to erase: " << (*tuple_it)->getTokensValue() << endl;
+            //query_it++;
+            //cout << "next value of query_it is: " << (*query_it)->getTokensValue() << endl;
+            query_params.erase(query_it);
+            cout << "value of query_it after erasing: " << (*query_it)->getTokensValue() << endl;
+            //columns->headings.erase(schema_it);
             current_tuple->token_list.erase(tuple_it);
             query_it++;
             tuple_it++;
-            schema_it++;
+            //assert(query_it == query_params.end());
+            //schema_it++;
         }
         else if ((*query_it)->getTokenType() == STRING){
+            //columns->headings.erase(schema_it);
+            //query_params.erase(query_it);
             query_it++;
-            schema_it++;//don't include the tuple because all strings have already been projected out
+            //tuple_it++;
+            //schema_it++;//don't include the tuple because all strings have already been projected out
         }
         else if (already_seen((*query_it)->getTokensValue())){
             query_it++;
-            schema_it++;
+            //schema_it++;
             tuple_it++;
         }
         else{//a new variable to check for has been found
+            cout << "pushing back: " << (*query_it)->getTokensValue() << endl;
             duplicate_values.push_back((*query_it)->getTokensValue());
             projectDuplicates(query_it, tuple_it, schema_it, current_tuple);//if the other recursive calls are all true, this current recursion will finish checking this variable of the query
                 //return false;
         }
     }
-    //return true;
+    //return true;*/
+    string query_master;
+    if (query_it != query_params.end()){
+        query_master = (*query_it)->getTokensValue();
+        query_it++;
+        tuple_it++;
+    }
+    while (query_it != query_params.end()){
+        
+        if ((*query_it)->getTokensValue() == query_master){
+            query_params.erase(query_it);
+            query_it++;
+            current_tuple->token_list.erase(tuple_it);
+            tuple_it++;
+        }
+        else if ((*query_it)->getTokenType() == STRING){
+            query_params.erase(query_it);
+            query_it++;
+        }
+        else if (already_seen((*query_it)->getTokensValue())){
+            query_it++;
+            tuple_it++;
+        }
+        else{//a new variable to check for has been found
+            duplicate_values.push_back((*query_it)->getTokensValue());
+            projectDuplicates(query_it, tuple_it, schema_it, current_tuple);
+        }
+    }    
 }
 
 /*vector<Tuple*> Relation::getRows(){

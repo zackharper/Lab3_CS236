@@ -77,6 +77,8 @@ void Schema::listRename(list<Token*> query_params){
             *schema_it = new Token((*query_it)->getTokensValue());//changes the name of this schema's tokens
             delete temp;
         }
+        //else
+            //headings.erase(schema_it);//because it will be a string and we don't need those
         query_it++;
         schema_it++;
     }
@@ -116,6 +118,7 @@ void Schema::project(list<Token*> query_params){
         token_it++;
         query_it++;
     }
+    
     /*cout << "FINAL PROJECTED SCHEMA IS: ";
     for (list<Token*>::iterator it = headings.begin(); it != headings.end(); it++)
         cout << (*it)->getTokensValue() << " ";
