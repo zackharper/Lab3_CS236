@@ -1,0 +1,108 @@
+Schemes:
+   snap(S,N,A,P)
+   csg(C,S,G)
+   cdh(C,D,H)
+   cr(C,R)
+
+
+	GUITAR(B,C,M, Y)
+   ELEVEN(one,two,three,four,five,six,seven,eight,nine,ten,eleven)
+
+Facts:
+   snap('12345','C. Brown','12 Apple','555-1234').
+   snap('67890','L. Van Pelt','34 Pear','555-5678').
+   snap('22222','P. Patty','56 Grape','555-9999').
+   snap('33333','Snoopy','12 Apple','555-1234').
+   csg('CS101','12345','A').
+   csg('CS101','67890','B').
+   csg('CS101','33333','A-').
+#start duplicate rows
+   csg('EE200','12345','C').
+   csg('EE200','12345','C').
+   csg('EE200','12345','C').
+   csg('EE200','12345','C').
+#end duplicate rows  
+ 
+csg('EE200','22222','B+').
+   csg('EE200','33333','B').
+   csg('PH100','67890','C+').
+   cdh('CS101','F','9PM').
+   cdh('EE200','M','10AM').
+   cdh('EE200','W','10AM').
+   cdh('PH100','Tu','11AM').
+   cr('CS101','Auditorium').
+   cr('EE200','25 Ohm Hall').
+   cr('PH100','Newton Lab').
+#start GUITAR
+GUITAR('FenderA','Yellow','Mustang','1968').
+GUITAR('Azibie', 'Blue', 'Blue', '1969').
+GUITAR('FenderA2','Yellow2','Mustang2','1968').
+GUITAR('TAkimine','Acoustic','woody','1968').
+GUITAR('Taylor','Acoustic','wannabe','1968').
+GUITAR('Vox','Black','Special Model', '1968').
+GUITAR('FenderB','Ocenia','Jazzmaster', '1969').
+GUITAR('FenderC','Woody','Woody', '1969').
+GUITAR('FenderD','Woody','Yodel', '1969').
+GUITAR('Gibson','LesPaul','LesPaul','1969').
+GUITAR('Fender','Fender','Fender','Fender').
+GUITAR('Freehole','Freehole','Surfrider','1969').
+
+ELEVEN('hello', 'my','name', 'is','alex','and','i', 'am' , 'a' , 'wannabe', 'entrepreneur').
+#RESULT FOR QUERY: ELEVEN(X,Y,X,Z,Y,Z,X,Y,Y,Z,Y)?
+ELEVEN('x-ray','yankee','x-ray','zulu','yankee','zulu','x-ray','yankee','yankee','zulu','yankee').
+ELEVEN('yip','yip','yip','yip','yip','yip','yip','yip','yip','yip','yip').
+ELEVEN('deja','entendu','deja','entendu','deja','entendu','deja','entendu','deja','entendu','deja').
+
+
+Rules:
+Queries:
+   snap(Id,'Snoopy',Adr,Ph)?
+   csg(Course,'33333',Grade)?
+   cr('CS101','Auditorium')?
+   cdh('EE200','F',Hour)?
+   csg(Course,Id,Grade)?
+   cdh(Course,Day,Hour)?
+   cr(Course,Room)?
+	
+	cr('EE200','12345','C')? #invalid query. cr only has 2 entries
+	
+	csg('EE200','12345','C')?
+
+	csg('EE200','12345',grade)?
+#|
+   1-get a test case with multiple renames ELEVEN(X,Y,X,Z,Y,Z,X,Y,Y,Z,Y)?
+   2-
+   3-
+   4-
+   5-
+|#
+#start alex guitar queries
+#Q1 - CORRECT
+   GUITAR(p1,p2,p3,p4)?
+#Q2 
+   #GUITAR(1,2,3,4)? #seg faults because of improper id?
+#Q3 -  CORRECT
+   GUITAR(Brand,TypeOrColor,ModelName,'196666')?
+#Q4 - CORRECT
+   GUITAR(Brand,TypeOrColor,ModelName,'1968')?
+#Q5 -- CORRECT
+   GUITAR(Brand,TypeOrColor,ModelName,'1969')?
+#Q6 -- INCORRECT! -- CORRECTED
+   GUITAR(BRAND,SAMETM,SAMETM,YEAR)?
+#Q7 -- INCORRECT --CORRECTED
+   GUITAR(BRAND,SAMETM,SAMETM,'1969')?
+#Q8 -- INCORRECT -- SHOULD BE OK
+   GUITAR(NOT,ENOUGH,PARAMS)?
+#Q9 -- CORRECT
+   GUITAR(X,X,X,X)? #should only print out X='Result'
+#Q10 -- CORRECT
+   GUITAR(X,X,Y,Z)?
+
+#Q11 --CORRECT
+   ELEVEN(A,B,C,D,E,F,G,H,I,J,K)?
+#Q12 -- CORRECT
+ELEVEN(X,Y,X,Z,Y,Z,X,Y,Y,Z,Y)?
+#Q13 -- CORRECT
+ELEVEN(U,U,U,U,U,U,U,U,U,U,U)?
+#Q14
+ELEVEN(A,B,A,B,A,B,A,B,A,B,A)?
