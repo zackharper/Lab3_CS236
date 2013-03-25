@@ -119,19 +119,8 @@ void Relation::startDuplicateCheck(){
 }
 
 
-/*THREE FUNCTIONS (duplicates,project_schema, and project_duplicates) ARE ALL VERY SIMILAR, WITH MINOR TWEAKS IN EACH FUNCTION TO ALLOW FOR OTHER INPUTS. The algorithm is as follows:
- starting at the first ID, make a master query string from the current ID pointed to. At the next character in the query:
- if the current token pointed by the query iterator is equal to the master string
-    process the duplicate value within the SCHEMA or TUPLE (not the query), mostly by erasing
-    increment the iterators
- else if token pointed to is a STRING type
-    erase and/or simply increment (depening on the function)
- else if the token is a different variable that has already been seen (this is known by checking a vector of strings to compare the current token to the strings in the vector)
-    simply increment
- else //the current token is an unseen ID type which must also be checked for duplicate values within the query
-    push back the value into the duplicate value vector, which will tell other recursive calls that we have processed, or are currently processing that value as a duplicate
-    recursively call the duplicate function, using the current token value as a new query master
- */
+//Soooooooo, a couple of these functions are really complicated. We tried for hours to implement one of them until we ofund an easier method that we coded up in 15 minutes. That code is in the function projectSchema(). The other functions used recursion in a very complicated method. Just pay attention to the projectSchema method.
+
 bool Relation::duplicates(list<Token*>::iterator query_it, list<Token*>::iterator tuple_it){
     string query_master = (*query_it)->getTokensValue();
     string tuple_master = (*tuple_it)->getTokensValue();
@@ -159,33 +148,18 @@ bool Relation::duplicates(list<Token*>::iterator query_it, list<Token*>::iterato
 }
 
 void Relation::project(){
-    cout << "\nschema is currently: ";
-    for (list<Token*>::iterator it = columns->headings.begin(); it != columns->headings.end(); it++)
-        cout << (*it)->getTokensValue() << " ";
-    cout << endl;
     
-    cout << "query is currently: ";
+    /*cout << "query is currently: ";
     for (list<Token*>::iterator it = query_params.begin(); it != query_params.end(); it++)
         cout << (*it)->getTokensValue() << " ";
-    cout << endl << endl;
+    cout << endl << endl;*/
     
-    /*list<Token*>::iterator q = query_params.begin();
-    list<Token*>::iterator s = columns->headings.begin();
-    int counter = 0;
-    while (q != query_params.end() && s != columns->headings.end() && (*q)->getTokenType() == STRING ) {
-        q++;
-        s++;
-        counter++;
-    }
-    if (q != query_params.end()) 
-        duplicate_values.push_back((*q)->getTokensValue());
-    cout << "about to project schema" << endl;*/
     projectSchema();
     
-    cout << "schema is now: ";
+    /*cout << "schema is now: ";
     for (list<Token*>::iterator it = columns->headings.begin(); it != columns->headings.end(); it++)
         cout << (*it)->getTokensValue() << " ";
-    cout << endl;
+    cout << endl;*/
     
     clearDuplicates();
     
