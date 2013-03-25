@@ -16,7 +16,7 @@ using namespace std;
 
 class Schema {
 public:
-    Schema(list<Token*>);
+    Schema(Scheme*);
     Schema(Schema*);
     ~Schema();
     void rename(Token *, int);
@@ -26,10 +26,14 @@ public:
 
     string toString();
     list<Token*> headings;
+    //Tuple * headings;
 private:
     void destroy(int);
     bool already_seen(string);
     vector<string> dupes;
+void checkDupes(list<Token*>::iterator,list<Token*>::iterator,list<Token*>);
+bool seen(string);
+
 };
 
 #endif /* defined(__Lab2New__Schema__) */

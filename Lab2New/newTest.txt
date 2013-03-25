@@ -47,7 +47,7 @@ GUITAR('Freehole','Freehole','Surfrider','1969').
 Rules:
 Queries:
    
-#|
+
 snap(Id,'Snoopy',Adr,Ph)?
    csg(Course,'33333',Grade)?
    cr('CS101','Auditorium')?
@@ -56,12 +56,12 @@ snap(Id,'Snoopy',Adr,Ph)?
    cdh(Course,Day,Hour)?
    cr(Course,Room)?
 	
-	cr('EE200','12345','C')? #invalid query. cr only has 2 entries
+#	cr('EE200','12345','C')? #invalid query. cr only has 2 entries
 	
 	csg('EE200','12345','C')?
 
 	csg('EE200','12345',grade)?
-|#
+
 #|   1-get a test case with multiple renames snap(X,Y,X,Z,Y,Z,X,Y,Y,Z,Y)?
    2-
    3-
@@ -70,22 +70,22 @@ snap(Id,'Snoopy',Adr,Ph)?
 |#
 #start alex guitar queries
 #Q1 - CORRECT
-#   GUITAR(p1,p2,p3,p4)?
+   GUITAR(p1,p2,p3,p4)?
 #Q2 
 #   #GUITAR(1,2,3,4)? #seg faults because of improper id?
 #Q3 -  CORRECT
-#   GUITAR(Brand,TypeOrColor,ModelName,'196666')?
+   GUITAR(Brand,TypeOrColor,ModelName,'196666')?
 #Q4 - CORRECT
-#   GUITAR(Brand,TypeOrColor,ModelName,'1968')?
+   GUITAR(Brand,TypeOrColor,ModelName,'1968')?
 #Q5 -- CORRECT
-#   GUITAR(Brand,TypeOrColor,ModelName,'1969')?
+   GUITAR(Brand,TypeOrColor,ModelName,'1969')?
 #Q6 -- INCORRECT!
    GUITAR(BRAND,SAMETM,SAMETM,YEAR)?
 #Q7 -- INCORRECT
-#   GUITAR(BRAND,SAMETM,SAMETM,'1969')?
+   GUITAR(BRAND,SAMETM,SAMETM,'1969')?
 #Q8 -- INCORRECT
 #   GUITAR(NOT,ENOUGH,PARAMS)?
 #Q9 -- 
-#   GUITAR(X,X,X,X)? #should only print out X='Result'
+   GUITAR(X,X,X,X)? #should only print out X='Result'
 #Q10
-#   GUITAR(X,X,Y,Z)?
+   GUITAR(X,X,Y,Z)?

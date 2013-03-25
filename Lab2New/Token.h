@@ -22,7 +22,7 @@ class Token {
          * PostCondition: tokenType = NUL AND tokensValue = "" AND tokensLineNumber = 0
          */
         Token();
-        Token(std::string);
+        Token(std::string, TokenType);
 
         /**
          * Creates a new Token from the newType, newValue and newTokensLineNumber
@@ -118,7 +118,8 @@ class Token {
          * PostCondition: tokenType = newTokenType 
          */
         void setTokenType(const TokenType newTokenType);
-        
+    void setTokenValue(std::string);
+    
     private:
         //Domain Implementation
             //The names used in the domain definition do not necessarily match the names used in the

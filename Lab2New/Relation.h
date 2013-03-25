@@ -18,9 +18,11 @@ public:
     string sortTuples();
     void select(Relation*);
     bool duplicates(list<Token*>::iterator, list<Token*>::iterator);
-    void projectDuplicates(list<Token*>::iterator, list<Token*>::iterator, list<Token*>::iterator, Tuple*);
+    void projectDuplicates(list<Token*>::iterator, list<Token*>::iterator, Tuple*);
     void rename();
-    void project();
+    void project(Relation*, Query*);
+    void deleteSchemaStrings();
+    void projectSchema(list<Token*>::iterator, list<Token*>::iterator);
     
     Token * getName();
     Schema * getColumns();
@@ -42,6 +44,7 @@ private:
     bool hasId();
     void clearDuplicates();
     //vector<int> str_vec;
+    void clearQueryParams(Relation*, Query*);
     
     
 };

@@ -14,14 +14,14 @@ Tuple::Tuple(Facts* fact){
         Token * temp = fact->getTokens()[i];
         if (temp->getTokenType() == ID || temp->getTokenType() == STRING){
             //token_vec.push_back(temp);
-            token_list.push_back(new Token(temp->getTokensValue()));
+            token_list.push_back(new Token(temp->getTokensValue(),temp->getTokenType()));
         }
     }
 }
 
 Tuple::Tuple(Tuple* old_tuple){
     for (list<Token*>::iterator old_it = old_tuple->token_list.begin(); old_it != old_tuple->token_list.end(); old_it++)
-        this->token_list.push_back(new Token((*old_it)->getTokensValue()));
+        this->token_list.push_back(new Token((*old_it)->getTokensValue(),(*old_it)->getTokenType()));
 }
 
 Tuple::~Tuple(){

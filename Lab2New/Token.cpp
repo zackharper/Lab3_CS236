@@ -25,8 +25,8 @@ Token::Token(const Token& token) {
     value = token.value;
 }
 
-Token::Token(string new_value){
-    tokenType = ID;
+Token::Token(string new_value, TokenType type){
+    tokenType = type;
     lineNumber = 0;
     value = new_value;
 }
@@ -66,4 +66,8 @@ bool Token::operator==(const Token& token) {
 
 void Token::setTokenType(const TokenType newTokenType) {
     tokenType = newTokenType;
+}
+
+void Token::setTokenValue(std::string str){
+    value = str;
 }
