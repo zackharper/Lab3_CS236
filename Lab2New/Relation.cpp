@@ -107,7 +107,7 @@ void Relation::startDuplicateCheck(){
     for (list<Tuple*>::iterator tuple = rows_list.begin(); tuple != rows_list.end(); tuple++){
         list<Token*>::iterator tuple_tokens = (*tuple)->token_list.begin();
         list<Token*>::iterator query = query_params.begin();
-        while ((*query)->getTokenType() != ID){
+        while ((*query)->getTokenType() != ID && query != query_params.end()){
             tuple_tokens++;
             query++;
         }
@@ -159,7 +159,34 @@ bool Relation::duplicates(list<Token*>::iterator query_it, list<Token*>::iterato
 }
 
 void Relation::project(){
-    projectSchema(query_params.begin(), columns->headings.begin());
+    cout << "\nschema is currently: ";
+    for (list<Token*>::iterator it = columns->headings.begin(); it != columns->headings.end(); it++)
+        cout << (*it)->getTokensValue() << " ";
+    cout << endl;
+    
+    cout << "query is currently: ";
+    for (list<Token*>::iterator it = query_params.begin(); it != query_params.end(); it++)
+        cout << (*it)->getTokensValue() << " ";
+    cout << endl << endl;
+    
+    /*list<Token*>::iterator q = query_params.begin();
+    list<Token*>::iterator s = columns->headings.begin();
+    int counter = 0;
+    while (q != query_params.end() && s != columns->headings.end() && (*q)->getTokenType() == STRING ) {
+        q++;
+        s++;
+        counter++;
+    }
+    if (q != query_params.end()) 
+        duplicate_values.push_back((*q)->getTokensValue());
+    cout << "about to project schema" << endl;*/
+    projectSchema();
+    
+    cout << "schema is now: ";
+    for (list<Token*>::iterator it = columns->headings.begin(); it != columns->headings.end(); it++)
+        cout << (*it)->getTokensValue() << " ";
+    cout << endl;
+    
     clearDuplicates();
     
     for (list<Tuple*>::iterator it = this->rows_list.begin(); it != this->rows_list.end(); it++)
@@ -167,31 +194,25 @@ void Relation::project(){
     
 }
 
-void Relation::projectSchema(list<Token*>::iterator query_it, list<Token*>::iterator schema_it){
-    string query_master;
-    if (query_it != query_params.end() && (*query_it)->getTokenType() == ID && schema_it != columns->headings.end()){
-        query_master = (*query_it)->getTokensValue();
-        query_it++;
-        schema_it++;
+void Relation::projectSchema(){
+    list<Token*>::iterator s = columns->headings.begin();
+    list<Token*>::iterator q = query_params.begin();
+    while (q != query_params.end() && s != columns->headings.end()) {
+        if ((*q)->getTokenType() == STRING || already_seen((*q)->getTokensValue())) 
+            (*s)->setTokenType(COLON);
+        else
+            duplicate_values.push_back((*q)->getTokensValue());
+        q++;
+        s++;
     }
-    while (query_it != query_params.end() && schema_it != columns->headings.end()){
-        if ((*query_it)->getTokenType() == STRING || (*query_it)->getTokensValue() == query_master){
-            query_it++;
-            columns->headings.erase(schema_it);
-            if (query_it != query_params.end())
-                schema_it++;
-        }
-        
-        else if (already_seen((*query_it)->getTokensValue())){
-            query_it++;
-            if (query_it != query_params.end())
-                schema_it++;
-        }
-        else{//a new variable to check for has been found
-            duplicate_values.push_back((*query_it)->getTokensValue());
-            projectSchema(query_it, schema_it);
-        }
+    s--;
+    while (s != columns->headings.begin()) {
+        if ((*s)->getTokenType() == COLON) 
+            columns->headings.erase(s);
+        s--;
     }
+    if ((*s)->getTokenType() == COLON)
+        columns->headings.erase(s);
 }
 
 

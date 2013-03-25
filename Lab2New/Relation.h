@@ -32,10 +32,10 @@ private:
     void projectDuplicates(list<Token*>::iterator, list<Token*>::iterator, Tuple*);
     
     void project();
-    void projectSchema(list<Token*>::iterator, list<Token*>::iterator);
+    void projectSchema(/*list<Token*>::iterator, list<Token*>::iterator*/);
 
     bool duplicates(list<Token*>::iterator, list<Token*>::iterator);
-
+    
     bool already_seen(string);
     bool hasId();
     void clearDuplicates();
