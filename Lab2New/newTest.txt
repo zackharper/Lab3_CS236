@@ -44,6 +44,9 @@ GUITAR('FenderD','Woody','Yodel', '1969').
 GUITAR('Gibson','LesPaul','LesPaul','1969').
 GUITAR('Fender','Fender','Fender','Fender').
 GUITAR('Freehole','Freehole','Surfrider','1969').
+GUITAR('Danelectro','Slinky-Sweet','Especial','1969a').
+
+GUITAR('Danelectro','Slinky-Sweet','Especial','1969b').
 Rules:
 Queries:
    
@@ -89,3 +92,9 @@ snap(Id,'Snoopy',Adr,Ph)?
    GUITAR(X,X,X,X)? #should only print out X='Result'
 #Q10
    GUITAR(X,X,Y,Z)?
+#Q11
+   GUITAR(yodel,yodel,yodel,'YEARz')?
+
+   GUITAR(yodel,yodel,yodel,'1969a')?
+   GUITAR(yodel,yodel,yodel,year)?
+   GUITAR('Danelectro',name,type,year)?

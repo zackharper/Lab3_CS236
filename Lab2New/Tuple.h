@@ -19,17 +19,11 @@ public:
     Tuple(Facts*);
     Tuple(Tuple*);
     ~Tuple();
-    bool select(vector<Token*>);
     bool listSelect(list<Token*>);
     void project(list<Token*>);
-    void printTokenList();
-    void destroy();
-    vector<Token*> getTokens();
+    
     list<Token*> token_list;
-
 private:
-    //vector<Token*> tokens;
-    //vector<Token*> token_vec;
 };
 
 #endif /* defined(__Lab2New__Tuple__) */

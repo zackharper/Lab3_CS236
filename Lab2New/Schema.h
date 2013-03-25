@@ -19,21 +19,10 @@ public:
     Schema(Scheme*);
     Schema(Schema*);
     ~Schema();
-    void rename(Token *, int);
     void listRename(list<Token*>);
-    void project(list<Token*>);
-    void projectDupes(list<Token*>);
 
-    string toString();
     list<Token*> headings;
-    //Tuple * headings;
 private:
-    void destroy(int);
-    bool already_seen(string);
-    vector<string> dupes;
-void checkDupes(list<Token*>::iterator,list<Token*>::iterator,list<Token*>);
-bool seen(string);
-
 };
 
 #endif /* defined(__Lab2New__Schema__) */
